@@ -41,7 +41,6 @@ CHOptimizedMethod1(self, id, GJIMSessionService, p_handlePushPackage, PushPackag
             GJIMSessionToken *sessionToken = [objc_getClass("GJIMSessionToken") gji_sessionTokenWithId: pkg.sessionId type:2];
             [objc_getClass("GJIMDBService") gji_getMessagesWithToken:sessionToken complete:^(id data) {
                 GJIMMessageModel *targetMsg;
-                
                 for (GJIMMessageModel *msg in data) {
                     if (msg.msgId == pkg.messageId) {
                         targetMsg = msg;
@@ -51,7 +50,12 @@ CHOptimizedMethod1(self, id, GJIMSessionService, p_handlePushPackage, PushPackag
                 
                 if (targetMsg == nil) {
                     NSLog(@"[BLUEDHOOK] Warning: cannot find msgid %llu from %d in message service, canceled tagging.", pkg.messageId, pkg.from);
-                    targetMsg = [data lastObject];
+                    for (GJIMMessageModel *msg in data) {
+                        if (msg.fromId == pkg.from) {
+                            targetMsg = msg;
+                            break;
+                        }
+                    }
                     targetMsg.type = 1;
                     targetMsg.msgId = pkg.messageId;
                     targetMsg.sendTime = pkg.timestamp;
