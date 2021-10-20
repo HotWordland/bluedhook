@@ -25,6 +25,9 @@
 #import "BDEncrypt.h"
 #import "BDChatBasicCell.h"
 
+#import "GJIMDBService.h"
+#import "GJIMSessionToken.h"
+
 CHDeclareClass(UITableViewCell);
 CHDeclareClass(GJIMSessionService);
 
@@ -34,25 +37,34 @@ CHOptimizedMethod1(self, id, GJIMSessionService, p_handlePushPackage, PushPackag
         case 55: // 撤回
         {
             NSLog(@"[BLUEDHOOK] %@ 撤回消息已被拦截。", pkg.name);
-            // 获取原始消息
-            NSDictionary *serviceDict = [self messageServiceDict];
-            GJIMMessageService *service = [serviceDict objectForKey:[NSString stringWithFormat:@"2+%d", pkg.from]];
-            if (service == nil) {
-                NSLog(@"[BLUEDHOOK] Warning: cannot find msgid %llu from %d in message service, canceled tagging.", pkg.messageId, pkg.from);
-                return nil;
-            }
-            
-            GJIMMessageModel *targetMsg;
-            
-            for (GJIMMessageModel *msg in [service messageArr]) {
-                if (msg.msgId == pkg.messageId) {
-                    targetMsg = msg;
-                    break;
+            // 获取原始消息，打 tag
+            GJIMSessionToken *sessionToken = [objc_getClass("GJIMSessionToken") gji_sessionTokenWithId: pkg.sessionId type:2];
+            [objc_getClass("GJIMDBService") gji_getMessagesWithToken:sessionToken complete:^(id data) {
+                GJIMMessageModel *targetMsg;
+                
+                for (GJIMMessageModel *msg in data) {
+                    if (msg.msgId == pkg.messageId) {
+                        targetMsg = msg;
+                        break;
+                    }
                 }
-            }
+                
+                if (targetMsg == nil) {
+                    NSLog(@"[BLUEDHOOK] Warning: cannot find msgid %llu from %d in message service, canceled tagging.", pkg.messageId, pkg.from);
+                    targetMsg = [data lastObject];
+                    targetMsg.type = 1;
+                    targetMsg.msgId = pkg.messageId;
+                    targetMsg.sendTime = pkg.timestamp;
+                    targetMsg.msgExtra = @{@"BLUED_HOOK_IS_RECALLED": @1};
+                    targetMsg.content = @"对方撤回了一条消息，但已错过接收原始消息无法复原。";
+                    [self addMessage:targetMsg];
+                    return;
+                }
+                
+                targetMsg.msgExtra = @{@"BLUED_HOOK_IS_RECALLED": @1};
+                [self updateMessage:targetMsg];
+            }];
             
-            targetMsg.msgExtra = @{@"BLUED_HOOK_IS_RECALLED": @1};
-            [self updateMessage:targetMsg];
             return nil;
         }
             break;
@@ -70,8 +82,7 @@ CHOptimizedMethod1(self, id, GJIMSessionService, p_handlePushPackage, PushPackag
 
 CHOptimizedMethod0(self, id, UITableViewCell, contentView){
     NSString *cellClassName = [NSString stringWithFormat:@"%@", ((UIView*)self).class];
-    
-//    NSLog(@"%@", cellClassName);
+//    NSLog(@"-[UITableViewCell contentView]: %@", cellClassName);
     if (![cellClassName containsString:@"PrivateOther"]) {
         return CHSuper0(UITableViewCell, contentView);
     }
@@ -139,7 +150,10 @@ CHOptimizedMethod0(self, id, UITableViewCell, contentView){
         if ([msg.content containsString:@"burn-chatfiles"]) {
             labelText = @"该闪照已被对方撤回。";
         }
-    } else {
+//    } else if ([keys containsObject:@"BLUED_HOOK_RECALLED_MISSED"]){
+//        labelText = @"已错过接收原始消息。";
+    }
+    else {
 //        return contentView;
 //        labelText = [NSString stringWithFormat:@"%llu: %@", msg.msgId, msg.content];
     }

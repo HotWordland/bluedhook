@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B75F5FB627205E9F006FD654 /* GJIMDBService.h in Headers */ = {isa = PBXBuildFile; fileRef = B75F5FB527205E9F006FD654 /* GJIMDBService.h */; };
+		B75F5FB827205FBF006FD654 /* GJIMSessionToken.h in Headers */ = {isa = PBXBuildFile; fileRef = B75F5FB727205FBF006FD654 /* GJIMSessionToken.h */; };
 		B7A1D81C271F272A00642CA3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A1D81B271F272A00642CA3 /* Foundation.framework */; };
 		B7A1D824271F272A00642CA3 /* bluedhook.mm in Sources */ = {isa = PBXBuildFile; fileRef = B7A1D823271F272A00642CA3 /* bluedhook.mm */; };
 		B7A1D82F271F27B600642CA3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7A1D82E271F27B600642CA3 /* UIKit.framework */; };
@@ -21,7 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B7862CA7271FB93B0081C061 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		B75F5FB527205E9F006FD654 /* GJIMDBService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJIMDBService.h; sourceTree = "<group>"; };
+		B75F5FB727205FBF006FD654 /* GJIMSessionToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJIMSessionToken.h; sourceTree = "<group>"; };
+		B7862CAE271FE7100081C061 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B7A1D818271F272A00642CA3 /* bluedhook.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = bluedhook.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7A1D81B271F272A00642CA3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7A1D820271F272A00642CA3 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
@@ -55,7 +59,7 @@
 		B7A1D80E271F272A00642CA3 = {
 			isa = PBXGroup;
 			children = (
-				B7862CA7271FB93B0081C061 /* README */,
+				B7862CAE271FE7100081C061 /* README.md */,
 				B7A1D81D271F272A00642CA3 /* bluedhook */,
 				B7A1D81A271F272A00642CA3 /* Frameworks */,
 				B7A1D819271F272A00642CA3 /* Products */,
@@ -85,11 +89,13 @@
 				B7A1D830271F283C00642CA3 /* BasePackage.h */,
 				B7A1D831271F283C00642CA3 /* PushPackage.h */,
 				B7A1D83C271F4EF300642CA3 /* BDEncrypt.h */,
+				B75F5FB527205E9F006FD654 /* GJIMDBService.h */,
 				B7A1D83A271F293000642CA3 /* GJIMBaseModel.h */,
 				B7A1D834271F287600642CA3 /* GJIMMessageModel.h */,
 				B7A1D83E271F53C200642CA3 /* GJIMMessageService.h */,
-				B7A1D838271F292300642CA3 /* GJIMSessionService.h */,
 				B7A1D883271F657800642CA3 /* BDChatBasicCell.h */,
+				B7A1D838271F292300642CA3 /* GJIMSessionService.h */,
+				B75F5FB727205FBF006FD654 /* GJIMSessionToken.h */,
 				B7A1D823271F272A00642CA3 /* bluedhook.mm */,
 				B7A1D81E271F272A00642CA3 /* Package */,
 				B7A1D821271F272A00642CA3 /* Supporting Files */,
@@ -157,6 +163,8 @@
 				B7A1D835271F287600642CA3 /* GJIMMessageModel.h in Headers */,
 				B7A1D832271F283C00642CA3 /* BasePackage.h in Headers */,
 				B7A1D833271F283C00642CA3 /* PushPackage.h in Headers */,
+				B75F5FB827205FBF006FD654 /* GJIMSessionToken.h in Headers */,
+				B75F5FB627205E9F006FD654 /* GJIMDBService.h in Headers */,
 				B7A1D83D271F4EF300642CA3 /* BDEncrypt.h in Headers */,
 				B7A1D839271F292300642CA3 /* GJIMSessionService.h in Headers */,
 				B7A1D83F271F53C300642CA3 /* GJIMMessageService.h in Headers */,
