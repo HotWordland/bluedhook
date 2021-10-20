@@ -1,0 +1,17 @@
+Package: com.u0x01.bluedhook
+Name: Blued 增强插件
+Version: 0.1-1
+Description: 支持 「Blued」、「Blued 极速版」闪照拦截、消息拦截。
+Section: Tweaks
+Depends: firmware (>= 5.0), mobilesubstrate
+Conflicts: 
+Replaces: 
+Priority: optional
+Architecture: iphoneos-arm
+Author: u0x01
+dev: 
+Homepage: https://twitter.com/u0x01
+Depiction:
+Maintainer: 
+Icon: 
+
